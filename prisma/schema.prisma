@@ -1,0 +1,29 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+  // "linux-arm64-openssl-1.1.x",
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String           @id @unique @default(cuid())
+  email           String           @unique
+  emailConfirmed  Boolean          @default(false)
+  passwordSet     Boolean          @default(false)
+  password        String?
+  firstName       String?
+  lastName        String?
+  yearOfBirth     Int?
+  gender          Gender?
+  settings        Json
+}
+
+enum Gender {
+  female
+  male
+  nonbinary
+}
